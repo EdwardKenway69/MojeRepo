@@ -1,16 +1,1045 @@
 <!DOCTYPE html>
 <html lang="pl">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="style.css">
-  <title>Ebook - SIŁA SPOKOJU</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Siła Spokoju - Odzyskaj kontrolę nad stresem w 3 minuty</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --navy: #1e3a5f;
+            --blue: #4a90e2;
+            --beige: #f5f1e8;
+            --gold: #d4af37;
+            --white: #ffffff;
+            --text: #333333;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Open Sans', sans-serif;
+            color: var(--text);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        h1, h2, h3 {
+            font-family: 'Montserrat', sans-serif;
+            color: var(--navy);
+            font-weight: 700;
+        }
+
+        h1 {
+            font-size: clamp(32px, 5vw, 48px);
+            line-height: 1.2;
+            margin-bottom: 20px;
+        }
+
+        h2 {
+            font-size: clamp(28px, 4vw, 36px);
+            margin-bottom: 30px;
+        }
+
+        h3 {
+            font-size: clamp(20px, 3vw, 24px);
+            margin-bottom: 15px;
+        }
+
+        /* Header sticky */
+        .sticky-header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: var(--white);
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            padding: 15px 0;
+            z-index: 1000;
+            transform: translateY(-100%);
+            transition: transform 0.3s ease;
+        }
+
+        .sticky-header.visible {
+            transform: translateY(0);
+        }
+
+        .sticky-header .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .sticky-header .logo {
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 700;
+            color: var(--navy);
+            font-size: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(135deg, var(--navy) 0%, var(--blue) 100%);
+            color: var(--white);
+            padding: 100px 20px 80px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg width="100" height="100" xmlns="http://www.w3.org/2000/svg"><circle cx="50" cy="50" r="2" fill="rgba(255,255,255,0.1)"/></svg>');
+            opacity: 0.3;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 1;
+            animation: fadeInUp 1s ease;
+        }
+
+        .hero h1 {
+            color: var(--white);
+            margin-bottom: 20px;
+        }
+
+        .hero-subtitle {
+            font-size: clamp(16px, 2.5vw, 20px);
+            margin-bottom: 40px;
+            opacity: 0.95;
+        }
+
+        .ebook-mockup {
+            max-width: 300px;
+            margin: 40px auto;
+            background: linear-gradient(135deg, var(--beige) 0%, var(--white) 100%);
+            padding: 40px 30px;
+            border-radius: 15px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            color: var(--navy);
+        }
+
+        .ebook-mockup h3 {
+            font-size: 28px;
+            margin-bottom: 10px;
+        }
+
+        .ebook-mockup p {
+            font-size: 14px;
+            opacity: 0.8;
+        }
+
+        /* Buttons */
+        .btn {
+            display: inline-block;
+            padding: 18px 45px;
+            background: var(--gold);
+            color: var(--white);
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: 600;
+            font-size: 18px;
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+            box-shadow: 0 10px 30px rgba(212, 175, 55, 0.4);
+        }
+
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 40px rgba(212, 175, 55, 0.6);
+            background: #c49d2f;
+        }
+
+        .btn-secondary {
+            background: transparent;
+            border: 2px solid var(--gold);
+            color: var(--gold);
+        }
+
+        .btn-secondary:hover {
+            background: var(--gold);
+            color: var(--white);
+        }
+
+        /* Sections */
+        section {
+            padding: 80px 20px;
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.6s ease;
+        }
+
+        section.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .section-alt {
+            background: var(--beige);
+        }
+
+        /* Problem Section */
+        .problem-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin: 40px 0;
+        }
+
+        .problem-item {
+            background: var(--white);
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+            text-align: center;
+            transition: transform 0.3s ease;
+        }
+
+        .problem-item:hover {
+            transform: translateY(-5px);
+        }
+
+        .problem-item::before {
+            content: '❌';
+            font-size: 40px;
+            display: block;
+            margin-bottom: 15px;
+        }
+
+        .reassurance {
+            text-align: center;
+            font-size: 20px;
+            color: var(--navy);
+            font-weight: 600;
+            margin-top: 40px;
+            font-style: italic;
+        }
+
+        /* Solution Section */
+        .techniques {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+            margin: 50px 0;
+        }
+
+        .technique-card {
+            background: var(--white);
+            padding: 40px 30px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            text-align: center;
+            transition: all 0.3s ease;
+            border-top: 5px solid var(--blue);
+        }
+
+        .technique-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.15);
+        }
+
+        .technique-icon {
+            font-size: 50px;
+            margin-bottom: 20px;
+        }
+
+        /* Benefits */
+        .benefits-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+            margin: 50px 0;
+        }
+
+        .benefit-box {
+            background: linear-gradient(135deg, var(--blue) 0%, var(--navy) 100%);
+            color: var(--white);
+            padding: 35px;
+            border-radius: 15px;
+            text-align: center;
+            transition: transform 0.3s ease;
+        }
+
+        .benefit-box:hover {
+            transform: scale(1.05);
+        }
+
+        .benefit-box::before {
+            content: '✓';
+            font-size: 40px;
+            display: block;
+            margin-bottom: 15px;
+            color: var(--gold);
+        }
+
+        /* Table of Contents */
+        .toc-list {
+            background: var(--white);
+            padding: 40px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            max-width: 700px;
+            margin: 40px auto;
+        }
+
+        .toc-item {
+            padding: 20px;
+            border-left: 4px solid var(--gold);
+            margin-bottom: 15px;
+            background: var(--beige);
+            border-radius: 8px;
+            transition: all 0.3s ease;
+        }
+
+        .toc-item:hover {
+            border-left-width: 8px;
+            padding-left: 24px;
+        }
+
+        .toc-number {
+            color: var(--blue);
+            font-weight: 700;
+            margin-right: 10px;
+        }
+
+        /* Testimonials */
+        .testimonials {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin: 50px 0;
+        }
+
+        .testimonial-card {
+            background: var(--white);
+            padding: 35px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            position: relative;
+        }
+
+        .testimonial-card::before {
+            content: '"';
+            font-size: 80px;
+            color: var(--gold);
+            opacity: 0.2;
+            position: absolute;
+            top: 10px;
+            left: 20px;
+            font-family: Georgia, serif;
+        }
+
+        .stars {
+            color: var(--gold);
+            font-size: 20px;
+            margin-bottom: 15px;
+        }
+
+        .testimonial-author {
+            margin-top: 20px;
+            font-style: italic;
+            color: var(--blue);
+            font-weight: 600;
+        }
+
+        /* CTA Box */
+        .cta-box {
+            background: linear-gradient(135deg, var(--navy) 0%, var(--blue) 100%);
+            color: var(--white);
+            padding: 60px 40px;
+            border-radius: 20px;
+            text-align: center;
+            max-width: 700px;
+            margin: 0 auto;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.2);
+        }
+
+        .cta-box h2 {
+            color: var(--white);
+        }
+
+        .price {
+            font-size: 48px;
+            font-weight: 700;
+            margin: 30px 0;
+            color: var(--gold);
+        }
+
+        .price-old {
+            text-decoration: line-through;
+            opacity: 0.6;
+            font-size: 30px;
+            margin-right: 15px;
+        }
+
+        .cta-features {
+            margin: 30px 0;
+            text-align: left;
+            display: inline-block;
+        }
+
+        .cta-features li {
+            margin-bottom: 15px;
+            padding-left: 30px;
+            position: relative;
+        }
+
+        .cta-features li::before {
+            content: '✓';
+            position: absolute;
+            left: 0;
+            color: var(--gold);
+            font-weight: 700;
+            font-size: 20px;
+        }
+
+        /* About */
+        .about-content {
+            max-width: 800px;
+            margin: 0 auto;
+            text-align: center;
+            font-size: 18px;
+            line-height: 1.8;
+        }
+
+        /* FAQ */
+        .faq-list {
+            max-width: 800px;
+            margin: 40px auto;
+        }
+
+        .faq-item {
+            background: var(--white);
+            margin-bottom: 20px;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+        }
+
+        .faq-question {
+            padding: 25px;
+            font-weight: 600;
+            color: var(--navy);
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: background 0.3s ease;
+        }
+
+        .faq-question:hover {
+            background: var(--beige);
+        }
+
+        .faq-answer {
+            padding: 0 25px 25px;
+            color: var(--text);
+            line-height: 1.7;
+        }
+
+        /* Footer */
+        footer {
+            background: var(--navy);
+            color: var(--white);
+            padding: 60px 20px 30px;
+            text-align: center;
+        }
+
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+        }
+
+        .footer-links a {
+            color: var(--white);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .footer-links a:hover {
+            color: var(--gold);
+        }
+
+        .contact-info {
+            margin: 30px 0;
+            font-size: 16px;
+        }
+
+        .copyright {
+            margin-top: 40px;
+            padding-top: 30px;
+            border-top: 1px solid rgba(255,255,255,0.2);
+            opacity: 0.7;
+            font-size: 14px;
+        }
+
+        /* Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0,0,0,0.8);
+            z-index: 2000;
+            overflow-y: auto;
+        }
+
+        .modal.active {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal-content {
+            background: var(--white);
+            padding: 50px;
+            border-radius: 15px;
+            max-width: 800px;
+            margin: 20px;
+            max-height: 90vh;
+            overflow-y: auto;
+            position: relative;
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            font-size: 30px;
+            cursor: pointer;
+            color: var(--navy);
+            line-height: 1;
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero {
+                padding: 80px 20px 60px;
+            }
+
+            section {
+                padding: 60px 20px;
+            }
+
+            .btn {
+                padding: 15px 35px;
+                font-size: 16px;
+            }
+
+            .modal-content {
+                padding: 30px 20px;
+            }
+        }
+    </style>
 </head>
 <body>
-  <div>
-    <h1>SIŁA SPOKOJU - Odzyskaj kontrolę nad stresem w 3 minuty</h1>
-    <p>Ciągle czujesz napięcie? Masz trudności z koncentracją, snem lub spokojem w pracy? To nie Twoja wina - to reakcja Twojego układu nerwowego. Ale możesz nauczyć się go wyciszać.</p>
-  </div>
-  <img src="cover.png" alt="SIŁA SPOKOJU">
+    <!-- Sticky Header -->
+    <header class="sticky-header" id="stickyHeader">
+        <div class="container">
+            <div class="logo">SIŁA SPOKOJU</div>
+            <a href="#cta" class="btn">Kup teraz</a>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-content container">
+            <h1>Stres? Zobacz, jak w 3 minuty odzyskać spokój i pewność siebie</h1>
+            <p class="hero-subtitle">Błyskawiczne techniki, które działają natychmiast - bez coachingu i skomplikowanych ćwiczeń</p>
+            
+            <div class="ebook-mockup">
+                <h3>SIŁA SPOKOJU</h3>
+                <p>Błyskawiczne techniki, które pomogą Ci zachować kontrolę nad stresem</p>
+            </div>
+
+            <a href="#cta" class="btn">Kup teraz za 49 zł</a>
+        </div>
+    </section>
+
+    <!-- Problem Section -->
+    <section id="problem" class="section-alt">
+        <div class="container">
+            <h2 style="text-align: center;">Czy to brzmi znajomo?</h2>
+            
+            <div class="problem-list">
+                <div class="problem-item">
+                    <p><strong>Ciągłe napięcie i trudności z odpoczynkiem?</strong></p>
+                </div>
+                <div class="problem-item">
+                    <p><strong>Problemy ze snem i koncentracją w pracy?</strong></p>
+                </div>
+                <div class="problem-item">
+                    <p><strong>Uczucie przytłoczenia w trudnych sytuacjach?</strong></p>
+                </div>
+                <div class="problem-item">
+                    <p><strong>Impulsywne reakcje, których później żałujesz?</strong></p>
+                </div>
+            </div>
+
+            <p class="reassurance">To nie Twoja wina - to naturalna reakcja układu nerwowego.<br>Ale możesz nauczyć się go wyciszać.</p>
+        </div>
+    </section>
+
+    <!-- Solution Section -->
+    <section id="solution">
+        <div class="container">
+            <h2 style="text-align: center;">Poznaj "Siłę Spokoju"</h2>
+            <p style="text-align: center; font-size: 18px; max-width: 700px; margin: 0 auto 50px;">Ebook, który nauczy Cię trzech sprawdzonych technik na natychmiastowe opanowanie stresu - bez zbędnej teorii, tylko konkretne ćwiczenia.</p>
+
+            <div class="techniques">
+                <div class="technique-card">
+                    <div class="technique-icon">🧘</div>
+                    <h3>Kotwica spokoju</h3>
+                    <p>Ćwiczenia oddechowe 3x3x3, które w kilka minut przywrócą Ci równowagę i spokój, nawet w najbardziej stresujących momentach.</p>
+                </div>
+
+                <div class="technique-card">
+                    <div class="technique-icon">🎯</div>
+                    <h3>Przejęcie kontroli</h3>
+                    <p>Technika uziemienia 5-4-3-2-1, która natychmiast przerwie spiralę niepokoju i przywróci Ci poczucie kontroli nad sytuacją.</p>
+                </div>
+
+                <div class="technique-card">
+                    <div class="technique-icon">⚡</div>
+                    <h3>Mini reset</h3>
+                    <p>Fizyczne przerwanie błędnego koła napięcia - prosta metoda, która resetuje układ nerwowy i przerywa reakcje stresowe.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Benefits Section -->
+    <section id="benefits" class="section-alt">
+        <div class="container">
+            <h2 style="text-align: center;">Co zyskasz dzięki "Sile Spokoju"?</h2>
+            
+            <div class="benefits-grid">
+                <div class="benefit-box">
+                    <h3>Błyskawiczny spokój</h3>
+                    <p>Odzyskasz spokój w kilka minut, nawet w najtrudniejszych sytuacjach</p>
+                </div>
+
+                <div class="benefit-box">
+                    <h3>Mentalną odporność</h3>
+                    <p>Zwiększysz swoją odporność psychiczną i staniesz się silniejszy w obliczu wyzwań</p>
+                </div>
+
+                <div class="benefit-box">
+                    <h3>Kontrolę emocji</h3>
+                    <p>Lepiej poradzisz sobie z trudnymi emocjami i sytuacjami konfliktowymi</p>
+                </div>
+
+                <div class="benefit-box">
+                    <h3>Świadome reagowanie</h3>
+                    <p>Nauczysz się reagować świadomie zamiast impulsywnie - to zmieni Twoje życie</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Table of Contents -->
+    <section id="toc">
+        <div class="container">
+            <h2 style="text-align: center;">Co znajdziesz w ebooku?</h2>
+            
+            <div class="toc-list">
+                <div class="toc-item">
+                    <span class="toc-number">01.</span>
+                    <strong>Błyskawiczne techniki na stres</strong> - działanie natychmiastowe
+                </div>
+                <div class="toc-item">
+                    <span class="toc-number">02.</span>
+                    <strong>Budowanie mentalnej tarczy</strong> - wzmacnianie pewności siebie
+                </div>
+                <div class="toc-item">
+                    <span class="toc-number">03.</span>
+                    <strong>Przygotowanie do wyzwań</strong> - strategie przed stresorem
+                </div>
+                <div class="toc-item">
+                    <span class="toc-number">04.</span>
+                    <strong>Działanie w epicentrum</strong> - radzenie sobie w trudnej sytuacji
+                </div>
+                <div class="toc-item">
+                    <span class="toc-number">05.</span>
+                    <strong>Regeneracja i wnioski</strong> - utrwalanie efektów
+                </div>
+                <div class="toc-item">
+                    <span class="toc-number">06.</span>
+                    <strong>Zakończenie</strong> - podsumowanie i dalsze kroki
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials -->
+    <section id="testimonials" class="section-alt">
+        <div class="container">
+            <h2 style="text-align: center;">Co mówią czytelnicy?</h2>
+            
+            <div class="testimonials">
+                <div class="testimonial-card">
+                    <div class="stars">★★★★★</div>
+                    <p>Po 10 latach zmagań ze stresem w korporacji, w końcu znalazłam coś, co działa. Technika 3x3x3 uratowała mnie przed atakiem paniki podczas ważnej prezentacji. Polecam każdemu!</p>
+                    <p class="testimonial-author">— Anna, 34 lata, manager</p>
+                </div>
+
+                <div class="testimonial-card">
+                    <div class="stars">★★★★★</div>
+                    <p>Skeptycznie podchodziłem do takich ebooków, ale 'Siła Spokoju' mnie zaskoczyła. Konkret, zero wody, techniki, które naprawdę można zastosować od razu. Metoda 5-4-3-2-1 to teraz mój codzienny rytuał.</p>
+                    <p class="testimonial-author">— Michał, 28 lat, programista</p>
+                </div>
+
+                <div class="testimonial-card">
+                    <div class="stars">★★★★★</div>
+                    <p>Jako mama dwójki dzieci żyję w ciągłym biegu. Ten ebook pokazał mi, że mogę odzyskać spokój w 3 minuty, nawet gdy dzieci krzyczą. Mini reset zmienił moje poranki. Warto każdej złotówki.</p>
+                    <p class="testimonial-author">— Karolina, 41 lat, przedsiębiorca</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section id="cta">
+        <div class="container">
+            <div class="cta-box">
+                <h2>Zacznij odzyskiwać kontrolę już dziś</h2>
+                
+                <div class="price">
+                    <span class="price-old">69 zł</span>
+                    <span>49 zł</span>
+                </div>
+
+                <ul class="cta-features">
+                    <li>Dostęp natychmiastowy po płatności</li>
+                    <li>Format PDF - czytaj na każdym urządzeniu</li>
+                    <li>3 techniki gotowe do użycia od razu</li>
+                    <li>Brak możliwości zwrotu po zakupie</li>
+                </ul>
+
+                <a href="https://buy.stripe.com/28EcN53hTbTg2eE4FSeUU00" class="btn" style="margin-top: 20px;">Kupuję za 49 zł - natychmiastowy dostęp</a>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="section-alt">
+        <div class="container">
+            <h2 style="text-align: center;">O autorze</h2>
+            
+            <div class="about-content">
+                <p><strong>Cześć, nazywam się Adrian</strong></p>
+                <p style="margin-top: 20px;">Przez lata zmagałem się ze stresem i brakiem pewności siebie. Wypróbowałem dziesiątki technik, aby znaleźć te, które naprawdę działają.</p>
+                <p style="margin-top: 20px;">"Siła Spokoju" to kompendium wiedzy, która zmieniła moje życie - i teraz chcę podzielić się nią z Tobą. Nie jestem guru ani coachem. Jestem osobą, która przeszła przez to samo co Ty i znalazła skuteczne rozwiązania.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ Section -->
+    <section id="faq">
+        <div class="container">
+            <h2 style="text-align: center;">Najczęściej zadawane pytania</h2>
+            
+            <div class="faq-list">
+                <div class="faq-item">
+                    <div class="faq-question">
+                        Jak otrzymam ebooka?
+                        <span>▼</span>
+                    </div>
+                    <div class="faq-answer">
+                        Natychmiast po dokonaniu płatności otrzymasz ebooka w formacie PDF na adres email podany podczas zakupu. Zwykle zajmuje to kilka minut.
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question">
+                        Czy mogę zwrócić produkt?
+                        <span>▼</span>
+                    </div>
+                    <div class="faq-answer">
+                        Niestety nie. Ze względu na cyfrowy charakter produktu, nie oferujemy możliwości zwrotu po zakupie. Masz jednak pewność, że otrzymujesz sprawdzone techniki, które działają.
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question">
+                        W jakim formacie jest ebook?
+                        <span>▼</span>
+                    </div>
+                    <div class="faq-answer">
+                        Ebook dostarczamy w formacie PDF, który możesz otworzyć na komputerze, tablecie, smartfonie czy czytniku ebooków. Działa na wszystkich urządzeniach.
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question">
+                        Czy potrzebuję specjalnych aplikacji?
+                        <span>▼</span>
+                    </div>
+                    <div class="faq-answer">
+                        Nie! Wystarczy dowolny czytnik PDF, który jest standardowo dostępny na każdym urządzeniu. Możesz również otworzyć go w przeglądarce internetowej.
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question">
+                        Czy są jakieś ukryte koszty?
+                        <span>▼</span>
+                    </div>
+                    <div class="faq-answer">
+                        Absolutnie nie. Cena 49 zł jest ceną finalną. Nie ma żadnych dodatkowych opłat, subskrypcji ani ukrytych kosztów.
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-links">
+                <a href="#" onclick="openModal('privacy'); return false;">Polityka prywatności</a>
+                <a href="#" onclick="openModal('terms'); return false;">Regulamin</a>
+                <a href="#about">O mnie</a>
+                <a href="#contact">Kontakt</a>
+            </div>
+
+            <div class="contact-info" id="contact">
+                <p><strong>Masz pytania? Skontaktuj się:</strong></p>
+                <p>Email: <a href="mailto:silaspokoju@gmail.com" style="color: var(--gold);">silaspokoju@gmail.com</a></p>
+            </div>
+
+            <div class="copyright">
+                <p>&copy; 2025 Siła Spokoju. Wszelkie prawa zastrzeżone.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Privacy Policy Modal -->
+    <div id="privacyModal" class="modal">
+        <div class="modal-content">
+            <span class="modal-close" onclick="closeModal('privacy')">&times;</span>
+            <h2>Polityka Prywatności</h2>
+            
+            <h3>1. Informacje ogólne</h3>
+            <p>Niniejsza Polityka Prywatności określa zasady przetwarzania i ochrony danych osobowych użytkowników sklepu internetowego prowadzonego przez Adriana (zwanego dalej: „Sprzedawcą”), dostępnego pod adresem internetowym silaspokoju.pl.</p>
+          <br>
+          <p>Polityka została opracowana w zgodzie z przepisami prawa, w szczególności z Rozporządzeniem Parlamentu Europejskiego i Rady (UE) 2016/679 z dnia 27 kwietnia 2016 r. (tzw. RODO).</p>
+
+            <h3>2. Administrator danych osobowych</h3>
+            <p>Administratorem danych osobowych jest Adrian, adres e-mail:silaspokoju@gmail.com.</p>
+          <br>
+          W sprawach dotyczących ochrony danych osobowych można kontaktować się bezpośrednio z Administratorem poprzez wysłanie wiadomości na powyższy adres e-mail.
+
+            <h3>3. Zakres i cel przetwarzania danych</h3>
+            <p>Administrator przetwarza dane osobowe w zakresie niezbędnym do:</p>
+            <ul>
+                <li>Realizacji zamówienia złożonego w sklepie internetowym,</li>
+                <li>kontaktu z Klientem w sprawie zamówienia,</li>
+                <li>wystawienia dokumentu potwierdzającego zakup (jeśli dotyczy),</li>
+                <li>ewentualnej obsługi reklamacji.</li>
+            </ul>
+            <p>Dane, które mogą być przetwarzane to:</p>
+            <ul>
+              <li>imię i nazwisko (jeśli podane),</li>
+              <li>adres e-mail,</li>
+              <li>dane dotyczące płatności (przekazywane przez operatora płatności, bez dostępu do numeru karty lub rachunku).</li>
+            </ul>
+
+            <h3>4. Cel przetwarzania danych</h3>
+            <p>Twoje dane osobowe przetwarzamy w celu:</p>
+            <ul>
+                <li>Realizacji zamówienia i dostarczenia produktu cyfrowego</li>
+                <li>Wystawienia faktury (jeśli dotyczy)</li>
+                <li>Kontaktu w sprawach związanych z zamówieniem</li>
+                <li>Prowadzenia rachunkowości i dokumentacji podatkowej</li>
+            </ul>
+          <p>Dane nie są wykorzystywane do celów marketingowych, chyba że Klient wyraził na to wyraźną zgodę.</p>
+
+            <h3>5. Podstawa prawna przetwarzania danych</h3>
+            <p>Dane osobowe przetwarzane są zgodnie z art. 6 ust. 1 RODO:</p>
+            <ul>
+              <li>lit. b – niezbędność przetwarzania do wykonania umowy,</li>
+              <li>lit. c – obowiązek prawny ciążący na Administratorze (np. podatkowy),</li>
+              <li>lit. f – uzasadniony interes Administratora (np. kontakt w sprawie zamówienia lub dochodzenie roszczeń).</li>
+            </ul>
+
+            <h3>6. Twoje prawa</h3>
+            <p>Przysługuje Ci prawo do:</p>
+            <ul>
+                <li>Dostępu do swoich danych osobowych</li>
+                <li>Sprostowania danych</li>
+                <li>Usunięcia danych (z zastrzeżeniem obowiązków prawnych)</li>
+                <li>Ograniczenia przetwarzania</li>
+                <li>Przenoszenia danych</li>
+                <li>Wniesienia sprzeciwu wobec przetwarzania</li>
+            </ul>
+
+            <h3>7. Pliki cookies</h3>
+            <p>Strona wykorzystuje pliki cookies w celach funkcjonalnych i analitycznych. Możesz zarządzać cookies w ustawieniach swojej przeglądarki.</p>
+
+            <h3>8. Kontakt</h3>
+            <p>W sprawach dotyczących ochrony danych osobowych możesz się z nami skontaktować: kontakt@silaspokoju.pl</p>
+        </div>
+    </div>
+
+    <!-- Terms Modal -->
+    <div id="termsModal" class="modal">
+        <div class="modal-content">
+            <span class="modal-close" onclick="closeModal('terms')">&times;</span>
+            <h2>Regulamin</h2>
+            
+            <h3>§1. Postanowienia ogólne</h3>
+            <p>1. Niniejszy Regulamin określa zasady korzystania ze strony internetowej silaspokoju.pl oraz zasady zakupu i dostarczania produktów cyfrowych.</p>
+            <p>2. Właścicielem strony jest [TWOJE DANE / NAZWA FIRMY].</p>
+            <p>3. Kontakt: kontakt@silaspokoju.pl</p>
+
+            <h3>§2. Definicje</h3>
+            <p><strong>Produkt cyfrowy</strong> - ebook w formacie PDF oferowany do sprzedaży</p>
+            <p><strong>Klient</strong> - osoba dokonująca zakupu produktu cyfrowego</p>
+            <p><strong>Cena</strong> - wartość produktu wyrażona w złotych polskich (PLN)</p>
+
+            <h3>§3. Zakup produktu</h3>
+            <p>1. Zakup produktu następuje poprzez system płatności Stripe.</p>
+            <p>2. Aktualna cena produktu "Siła Spokoju" wynosi 49 zł brutto.</p>
+            <p>3. Po dokonaniu płatności Klient otrzymuje produkt na podany adres e-mail.</p>
+            <p>4. Czas dostarczenia produktu: do 24 godzin od zaksięgowania płatności.</p>
+
+            <h3>§4. Płatności</h3>
+            <p>1. Płatności obsługiwane są przez zewnętrzny system Stripe.</p>
+            <p>2. Akceptujemy płatności kartą płatniczą, BLIK oraz przelewy online.</p>
+            <p>3. Produkt zostaje udostępniony po pozytywnej weryfikacji płatności.</p>
+
+            <h3>§5. Prawo odstąpienia od umowy</h3>
+            <p>1. <strong>WAŻNE:</strong> Zgodnie z art. 38 pkt 13 ustawy o prawach konsumenta, prawo odstąpienia od umowy nie przysługuje w przypadku produktów cyfrowych dostarczonych w postaci elektronicznej.</p>
+            <p>2. Dokonując zakupu, Klient potwierdza, że jest świadomy braku możliwości zwrotu produktu cyfrowego.</p>
+            <p>3. W przypadku problemów technicznych z pobraniem produktu, prosimy o kontakt: kontakt@silaspokoju.pl</p>
+
+            <h3>§6. Reklamacje</h3>
+            <p>1. Reklamacje dotyczące produktu można zgłaszać na adres: kontakt@silaspokoju.pl</p>
+            <p>2. Reklamacja powinna zawierać opis problemu oraz numer zamówienia.</p>
+            <p>3. Rozpatrzymy reklamację w ciągu 14 dni roboczych.</p>
+
+            <h3>§7. Własność intelektualna</h3>
+            <p>1. Produkt cyfrowy "Siła Spokoju" objęty jest ochroną prawa autorskiego.</p>
+            <p>2. Zakazane jest rozpowszechnianie, kopiowanie lub odsprzedaż produktu.</p>
+            <p>3. Produkt przeznaczony jest wyłącznie do użytku osobistego Klienta.</p>
+
+            <h3>§8. Ochrona danych osobowych</h3>
+            <p>1. Zasady przetwarzania danych osobowych określa Polityka Prywatności.</p>
+            <p>2. Administrator danych dokłada wszelkich starań w celu ochrony danych osobowych.</p>
+
+            <h3>§9. Postanowienia końcowe</h3>
+            <p>1. Regulamin wchodzi w życie z dniem publikacji.</p>
+            <p>2. Administrator zastrzega sobie prawo do zmiany Regulaminu.</p>
+            <p>3. W sprawach nieuregulowanych w Regulaminie mają zastosowanie przepisy prawa polskiego.</p>
+        </div>
+    </div>
+
+    <script>
+        // Sticky header
+        window.addEventListener('scroll', function() {
+            const header = document.getElementById('stickyHeader');
+            if (window.scrollY > 600) {
+                header.classList.add('visible');
+            } else {
+                header.classList.remove('visible');
+            }
+        });
+
+        // Scroll animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -100px 0px'
+        };
+
+        const observer = new IntersectionObserver(function(entries) {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('section').forEach(section => {
+            observer.observe(section);
+        });
+
+        // Modal functions
+        function openModal(type) {
+            const modal = document.getElementById(type === 'privacy' ? 'privacyModal' : 'termsModal');
+            modal.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeModal(type) {
+            const modal = document.getElementById(type === 'privacy' ? 'privacyModal' : 'termsModal');
+            modal.classList.remove('active');
+            document.body.style.overflow = 'auto';
+        }
+
+        // Close modal on outside click
+        window.onclick = function(event) {
+            if (event.target.classList.contains('modal')) {
+                event.target.classList.remove('active');
+                document.body.style.overflow = 'auto';
+            }
+        }
+
+        // Smooth scroll
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                const href = this.getAttribute('href');
+                if (href !== '#' && !href.includes('modal')) {
+                    e.preventDefault();
+                    const target = document.querySelector(href);
+                    if (target) {
+                        target.scrollIntoView({
+                            behavior: 'smooth',
+                            block: 'start'
+                        });
+                    }
+                }
+            });
+        });
+    </script>
 </body>
 </html>
